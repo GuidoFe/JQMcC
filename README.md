@@ -1,4 +1,4 @@
-# JQMcC
+# QMcC
 **OBIETTIVO:**
 Riproduzione in linguaggio java dell'algoritmo di Quine - McClusky per la minimizzazione del costo di una funzione 
 completamente speificata a un singolo output.
