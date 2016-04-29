@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>170</y>
+      <w>160</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>bg=yellow
+QMcC
+--
+--
+_+void main(String[] args)_
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>20</y>
+      <w>330</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>RigaCop
+--
+-int nImplicante
+-ArrayList&lt;Integer&gt; listMinT
+--
++RigaCop(int nImplicante, ArrayList&lt;Integer&gt; minT)
++getM(int index)
++void delM(int mintermine)
++boolean hasM(int mintermine)
++boolean isEmpty()
++int getP()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>170</y>
+      <w>220</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>TabCopertura
+--
+-ArrayList&lt;RigaCop&gt; tab
+-TabIndexP tabIP
+-ArrayList&lt;Integer&gt; finalP
+--
++TabCopertura(DA DEFINIRE)
+-boolean isEss(int P)
+-boolean isColDom(int m1, int m2)
+-boolean isRowDom(int p1, int p2)
+-void delP()
+-void delM()
+-void delMofP(int P)
++ArrayList&lt;Integer&gt; copri()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>570</x>
+      <y>280</y>
+      <w>170</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>TabIndexP
+--
+-ArrayList&lt;RigaIndexP&gt; tab
+--
++byte[] getP(int index)
++void delP(int index)
++int length()
+
+{innerclass
+RigaIndexP
+--
+int index
+byte[] P
+--
+innerclass}
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>480</x>
+      <y>70</y>
+      <w>140</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;120.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>480</x>
+      <y>210</y>
+      <w>110</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;90.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>160</x>
+      <y>180</y>
+      <w>130</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>360</x>
+      <y>480</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=.
+balloonmarci
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>340</y>
+      <w>110</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=)-
+m1=input for init
+</panel_attributes>
+    <additional_attributes>20.0;20.0;20.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>240</x>
+      <y>420</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>DA DEFINIRE
+customelement=
+drawArc(width-25,5,10,50,50,80,false) fg=red bg=red //Parameters (x, y, width, height, start, extent, open)
+drawCircle(width-20,40,3) fg=red bg=red //Parameters (x, y, radius)</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
