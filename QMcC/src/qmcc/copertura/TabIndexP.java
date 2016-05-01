@@ -10,8 +10,14 @@ import java.util.*;
  * @author Guido_Fe
  */
 class RigaIndexP {
-    int index;
-    byte[] P;
+    private int index;
+    private byte[] P;
+    public int getIndex(){
+        return index;
+    }
+    public byte[] getP(){
+        return P;
+    }
 }
 
 public class TabIndexP{
@@ -21,11 +27,20 @@ public class TabIndexP{
         boolean trovato = false;
         for(int i = 0; i<tab.size() && !trovato; i++){
             RigaIndexP RI = tab.get(i);
-            if(RI.index == index)
-                return RI.P;
+            if(RI.getIndex() == index)
+                return RI.getP();
         }
         System.out.println("ERROR: Can't find P" + index);
         System.exit(-1);
         return null;
+    }
+    
+    public void delP(int pIndex){
+        boolean trovato = false;
+        for(int i = 0; i<tab.size() && !trovato; i++)
+            if(tab.get(i).getIndex() == pIndex){
+                tab.remove(i);
+                trovato = true;
+            }
     }
 }

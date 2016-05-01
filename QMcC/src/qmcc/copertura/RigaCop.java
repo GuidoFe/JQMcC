@@ -1,7 +1,7 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * and open the template in the editor. Ciao bel
  */
 package qmcc.copertura;
 import java.util.*;
@@ -31,5 +31,13 @@ public class RigaCop {
     
     public boolean isEmpty(){
         return listMinT.isEmpty();
+    }
+    
+    public int getPIndex(){
+        return nImplicante;
+    }
+    
+    public int size(){
+        return listMinT.size();
     }
 }
