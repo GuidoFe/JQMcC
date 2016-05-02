@@ -10,11 +10,12 @@ import java.util.*;
  * @author Guido_Fe
  */
 public class RigaCop {
-    private final int nImplicante; //indice dell'implicante P (es P1 = 1)
+    private int nImplicante;
+    private final byte[] implicante; //indice dell'implicante P (es P1 = 1)
     private ArrayList<Integer> listMinT;
     
-    public RigaCop(int nImplicante, ArrayList<Integer> minT){
-        this.nImplicante = nImplicante;
+    public RigaCop(byte[] implicante, ArrayList<Integer> minT){
+        this.implicante = implicante;
         this.listMinT = minT;
     }
     public int getM(int index){
@@ -39,5 +40,9 @@ public class RigaCop {
     
     public int size(){
         return listMinT.size();
+    }
+    
+    public byte[] getP(){
+        return implicante;
     }
 }

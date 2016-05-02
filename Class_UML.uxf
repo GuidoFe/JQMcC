@@ -28,6 +28,7 @@ _+void main(String[] args)_
     <panel_attributes>RigaCop
 --
 -int nImplicante
+-byte[] implicante //ADD
 -ArrayList&lt;Integer&gt; listMinT
 --
 +RigaCop(int nImplicante, ArrayList&lt;Integer&gt; minT)
@@ -36,7 +37,8 @@ _+void main(String[] args)_
 +boolean hasM(int mintermine)
 +boolean isEmpty()
 +int getPIndex()
-+int size()</panel_attributes>
++int size()
++byte[] getP() //ADD</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -50,7 +52,7 @@ _+void main(String[] args)_
     <panel_attributes>TabCopertura
 --
 -ArrayList&lt;RigaCop&gt; tab
--TabIndexP tabIP
+//-TabIndexP tabIP //DEL
 -ArrayList&lt;Integer&gt; listAllMinT
 -ArrayList&lt;byte[]&gt; finalP
 --
@@ -70,35 +72,6 @@ _+void main(String[] args)_
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>560</x>
-      <y>290</y>
-      <w>190</w>
-      <h>210</h>
-    </coordinates>
-    <panel_attributes>TabIndexP
---
--ArrayList&lt;RigaIndexP&gt; tab
---
-+byte[] getP(int index)
-+void delP(int pIndex)
-+int length()
-
-{innerclass
-RigaIndexP
---
--int index
--byte[] P
---
-+int getIndex()
-+byte[] getP()
-innerclass}
-
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
       <x>470</x>
@@ -110,19 +83,6 @@ innerclass}
 m1=1
 m2=0..*</panel_attributes>
     <additional_attributes>10.0;130.0;120.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>470</x>
-      <y>220</y>
-      <w>110</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
-m2=1</panel_attributes>
-    <additional_attributes>10.0;10.0;90.0;90.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
