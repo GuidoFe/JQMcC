@@ -41,11 +41,7 @@ public class RigaCop {
     public int size(){
         return listMinT.size();
     }
-<<<<<<< HEAD:QMcC/src/qmcc/copertura/RigaCop.java
-    
     public byte[] getP(){
         return implicante;
     }
-=======
->>>>>>> 9f3954f3db086dad82fcc12cce61bc09bb227ada:QMcC/src/qmcc/copertura/RigaCop.java
 }
