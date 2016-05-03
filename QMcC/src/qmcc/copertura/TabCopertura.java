@@ -11,8 +11,24 @@ import java.util.*;
  */
 public class TabCopertura {
     private ArrayList<RigaCop> tab;
-    private ArrayList<Integer> listAllMinT; //lista di tutti i mintermini presenti
+    private ArrayList<Integer> listAllMinT; //lista di tutti i mintermini presenti. Byte > 2 solo per distinguere gli implicanti tra loro
     private ArrayList<byte[]> finalP;
+    
+    public TabCopertura(){  //PROVVISORIO
+        tab = new ArrayList<RigaCop>(){{
+            add(new RigaCop(0, new byte[]{0,0,0,2}, new ArrayList<Integer>(){{add(0); add(1); add(8);}}));
+            add(new RigaCop(1, new byte[]{1,2,0,2}, new ArrayList<Integer>(){{add(0); add(1);}}));
+            add(new RigaCop(2, new byte[]{2,2,0,1}, new ArrayList<Integer>(){{add(1); add(13);}}));
+            add(new RigaCop(3, new byte[]{3,0,0,2}, new ArrayList<Integer>(){{add(8); add(11);}}));
+            add(new RigaCop(4, new byte[]{4,0,1,2}, new ArrayList<Integer>(){{add(6); add(7);}}));
+            add(new RigaCop(5, new byte[]{5,0,0,2}, new ArrayList<Integer>(){{add(7); add(13);}}));
+            add(new RigaCop(6, new byte[]{6,0,0,2}, new ArrayList<Integer>(){{add(11); add(13);}}));
+        }};
+        listAllMinT = new ArrayList<Integer>(){{
+            add(0); add(1); add(6); add(7); add(8); add(11); add(13);
+        }};
+        finalP = new ArrayList();
+    }
     
     private boolean isEss(RigaCop P){
         boolean trovato = false;
@@ -72,6 +88,7 @@ public class TabCopertura {
             int m = tab.get(pos).getM(0);
             for(int i = 0; i<tab.size(); i++)
                 tab.get(i).delM(m);
+            listAllMinT.remove(new Integer(m));
         }
     }
     
@@ -120,7 +137,7 @@ public class TabCopertura {
     
     public boolean stepColDom(){
         boolean done = false;
-        for(int i = 0; i < listAllMinT.size(); i++){
+        for(int i = 0; i < listAllMinT.size() && done == false; i++){
             if(isMDom(listAllMinT.get(i))){
                 delM(listAllMinT.get(i));
                 listAllMinT.remove(i);
@@ -146,7 +163,7 @@ public class TabCopertura {
                 if(!(s1 || s2 || s3))
                     isBlocked = true;
             }while(!isBlocked && !listAllMinT.isEmpty());
-            if(isBlocked){
+            if(isBlocked && !listAllMinT.isEmpty()){
                 delMofP(0);
                 finalP.add(tab.get(0).getP());
                 delP(0);
@@ -156,5 +173,25 @@ public class TabCopertura {
             else redo = false;
         }while(redo);
         return finalP;
+    }
+    
+    public void printTab(){
+        System.out.print("  \t");
+        for(int i = 0; i<listAllMinT.size(); i++){
+            System.out.print(listAllMinT.get(i)+"\t");
+        }
+        System.out.println();
+        for(int i = 0; i<tab.size(); i++){
+            System.out.print("P"+tab.get(i).getPIndex()+"\t");
+            for(int j = 0; j<listAllMinT.size(); j++){
+                if(tab.get(i).hasM(listAllMinT.get(j)))
+                    System.out.print("X\t");
+                else System.out.print(".\t");
+            }
+            System.out.println();
+        }
+        for(int i = 0; i<=listAllMinT.size(); i++)
+            System.out.print("________");
+        System.out.println();
     }
 }

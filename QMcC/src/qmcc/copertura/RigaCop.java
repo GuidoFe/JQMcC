@@ -14,7 +14,8 @@ public class RigaCop {
     private final byte[] implicante; //indice dell'implicante P (es P1 = 1)
     private ArrayList<Integer> listMinT;
     
-    public RigaCop(byte[] implicante, ArrayList<Integer> minT){
+    public RigaCop(int nImplicante, byte[] implicante, ArrayList<Integer> minT){
+        this.nImplicante = nImplicante;
         this.implicante = implicante;
         this.listMinT = minT;
     }
