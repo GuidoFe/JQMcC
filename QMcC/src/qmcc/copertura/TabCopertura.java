@@ -14,28 +14,21 @@ public class TabCopertura {
     private ArrayList<Integer> listAllMinT; //lista di tutti i mintermini presenti. Byte > 2 solo per distinguere gli implicanti tra loro
     private ArrayList<byte[]> finalP;
     
-    public TabCopertura(){  //PROVVISORIO
-        tab = new ArrayList<RigaCop>(){{
-            add(new RigaCop(0, new byte[]{0,0,0,2}, new ArrayList<Integer>(){{add(0); add(1); add(8);}}));
-            add(new RigaCop(1, new byte[]{1,2,0,2}, new ArrayList<Integer>(){{add(0); add(1);}}));
-            add(new RigaCop(2, new byte[]{2,2,0,1}, new ArrayList<Integer>(){{add(1); add(13);}}));
-            add(new RigaCop(3, new byte[]{3,0,0,2}, new ArrayList<Integer>(){{add(8); add(11);}}));
-            add(new RigaCop(4, new byte[]{4,0,1,2}, new ArrayList<Integer>(){{add(6); add(7);}}));
-            add(new RigaCop(5, new byte[]{5,0,0,2}, new ArrayList<Integer>(){{add(7); add(13);}}));
-            add(new RigaCop(6, new byte[]{6,0,0,2}, new ArrayList<Integer>(){{add(11); add(13);}}));
-        }};
-        listAllMinT = new ArrayList<Integer>(){{
-            add(0); add(1); add(6); add(7); add(8); add(11); add(13);
-        }};
-        finalP = new ArrayList();
-    }
+//    public TabCopertura(){  //PROVVISORIO
+//        tab = new ArrayList<RigaCop>(){{
+//        }};
+//        listAllMinT = new ArrayList<Integer>(){{
+//            add(0); add(1);/* add(6); add(7); add(8); add(11); add(13);*/
+//        }};
+//        finalP = new ArrayList();
+//    }
     
     private boolean isEss(RigaCop P){
         boolean trovato = false;
         for(int i = 0; i<P.size() && !trovato; i++){
             boolean doppio = false;
             for(int j = 0; !doppio && j<tab.size(); j++){
-                if(tab.get(j).getPIndex() != P.getPIndex() && tab.get(j).hasM(P.getM(i))){
+                if(j!=i && tab.get(j).hasM(P.getM(i))){
                     doppio = true;
                 }
             }
@@ -59,13 +52,13 @@ public class TabCopertura {
         return trovato;
     }
     
-    private boolean isPDominated(RigaCop P){
+    private boolean isPDominated(int index){
         boolean trovato = false;
         for(int i = 0; i < tab.size() && !trovato; i++){
             boolean uguali = true;
-            if(tab.get(i).getPIndex() != P.getPIndex() && tab.get(i).size() > P.size()&& !trovato){
-                for(int j = 0; j<P.size() && uguali; j++){
-                    uguali = tab.get(i).hasM(P.getM(j));
+            if(i!=index && tab.get(i).size() > tab.get(index).size()){
+                for(int j = 0; j<tab.get(index).size() && uguali; j++){
+                    uguali = tab.get(i).hasM(tab.get(index).getM(j));
                 }
                 if(uguali) trovato = true;
             }
@@ -84,11 +77,8 @@ public class TabCopertura {
     }
     
     private void delMofP(int pos){
-        while(tab.get(pos).size() != 0){
-            int m = tab.get(pos).getM(0);
-            for(int i = 0; i<tab.size(); i++)
-                tab.get(i).delM(m);
-            listAllMinT.remove(new Integer(m));
+        while(!tab.get(pos).isEmpty()){
+            delM(tab.get(pos).getM(0));
         }
     }
     
@@ -113,11 +103,13 @@ public class TabCopertura {
         boolean done = false;       //Indica se è stato semplificato qualcosa
         for(int i = 0; i<tab.size() && !done; i++){
             if(isEss(tab.get(i))){
+                System.out.println("Essential- P: " + Arrays.toString(tab.get(i).getP()));
                 delMofP(i);
                 finalP.add(tab.get(i).getP());
                 delP(i);
                 done = true;
                 delVoidP();
+                printTab(); //DEBUG
             }
             
         }
@@ -127,9 +119,11 @@ public class TabCopertura {
     public boolean stepRowDom(){
         boolean done = false;
         for(int i = 0; i < tab.size() && !done; i++){
-            if(isPDominated(tab.get(i))){
+            if(isPDominated(i)){
+                System.out.println("RowDominated - P: " + Arrays.toString(tab.get(i).getP())); //DEBUG
                 delP(i);
                 done = true;
+                printTab(); //DEBUG
             }
         }
         return done;
@@ -137,12 +131,13 @@ public class TabCopertura {
     
     public boolean stepColDom(){
         boolean done = false;
-        for(int i = 0; i < listAllMinT.size() && done == false; i++){
+        for(int i = 0; i < listAllMinT.size() && !false; i++){
             if(isMDom(listAllMinT.get(i))){
+                System.out.println("ColDom - M: " + listAllMinT.get(i)); //DEBUG
                 delM(listAllMinT.get(i));
-                listAllMinT.remove(i);
                 delVoidP();
                 done = true;
+                printTab();
             }
         }
         return done;
@@ -151,7 +146,7 @@ public class TabCopertura {
     public ArrayList<byte[]> copri(){
         boolean redo = false;
         do{
-            boolean isBlocked = true;
+            boolean isBlocked = false;
             boolean s1, s2, s3;
             do{
                 s1 = stepEss();
@@ -159,16 +154,18 @@ public class TabCopertura {
                 s2 = stepRowDom();
                 if(s2) while(stepRowDom());
                 s3 = stepColDom();
-                if(s3) while(stepRowDom());
+                if(s3) while(stepColDom());
                 if(!(s1 || s2 || s3))
                     isBlocked = true;
             }while(!isBlocked && !listAllMinT.isEmpty());
-            if(isBlocked && !listAllMinT.isEmpty()){
+            if(isBlocked && !tab.isEmpty()){
+                System.out.println("Blocked ");
                 delMofP(0);
                 finalP.add(tab.get(0).getP());
                 delP(0);
                 redo = true;
                 delVoidP();
+                printTab();
             }
             else redo = false;
         }while(redo);
@@ -176,13 +173,13 @@ public class TabCopertura {
     }
     
     public void printTab(){
-        System.out.print("  \t");
+        System.out.print("         \t");
         for(int i = 0; i<listAllMinT.size(); i++){
             System.out.print(listAllMinT.get(i)+"\t");
         }
         System.out.println();
         for(int i = 0; i<tab.size(); i++){
-            System.out.print("P"+tab.get(i).getPIndex()+"\t");
+            System.out.print(Arrays.toString(tab.get(i).getP()) + "\t");
             for(int j = 0; j<listAllMinT.size(); j++){
                 if(tab.get(i).hasM(listAllMinT.get(j)))
                     System.out.print("X\t");
