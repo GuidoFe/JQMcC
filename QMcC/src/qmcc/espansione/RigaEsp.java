@@ -11,7 +11,7 @@ package qmcc.espansione;
 
 import java.util.*;
 public class RigaEsp {
-    ArrayList<Integer> mini = new ArrayList<Integer> (0);
+    ArrayList<Integer> mini = new ArrayList (0);
     byte [] code;
     boolean signed;
     int nUni;
@@ -54,6 +54,10 @@ public class RigaEsp {
                 c++;
         }
         return c;
+    }
+    
+    public void sign (){
+        signed = true;
     }
     
     public void printRig () {
