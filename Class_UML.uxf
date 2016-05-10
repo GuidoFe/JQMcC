@@ -1,168 +1,288 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>10</zoom_level>
+  <help_text>// Uncomment the following line to change the fontsize and font:
+// fontsize=14
+// fontfamily=Serif //possible: SansSerif,Serif,Monospaced
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+// Welcome to UMLet!
+//
+// Double-click on elements to add them to the diagram, or to copy them
+// Edit elements by modifying the text in this panel
+// Hold Ctrl to select multiple elements
+// Use Ctrl+mouse to select via lasso
+//
+// Use +/- or Ctrl+mouse wheel to zoom
+// Drag a whole relation at its central square icon
+//
+// Press Ctrl+C to copy the whole diagram to the system clipboard (then just paste it to, eg, Word)
+// Edit the files in the "palettes" directory to create your own element palettes
+//
+// Select "Custom Elements &gt; New..." to create new element types
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// This text will be stored with each diagram;  use it for notes.</help_text>
+  <zoom_level>5</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>180</y>
-      <w>160</w>
-      <h>50</h>
+      <x>465</x>
+      <y>245</y>
+      <w>90</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>bg=yellow
-QMcC
+Main
 --
 --
-_+void main(String[] args)_
+_+main(args : String[]) : void_
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>590</x>
-      <y>30</y>
-      <w>330</w>
-      <h>210</h>
+      <x>760</x>
+      <y>170</y>
+      <w>175</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes>RigaCop
 --
--int nImplicante
--byte[] implicante //ADD
--ArrayList&lt;Integer&gt; listMinT
+-nImplicante : int
+-implicante : byte[]
+-listMinT : ArrayList&lt;Integer&gt;
 --
-+RigaCop(int nImplicante, ArrayList&lt;Integer&gt; minT)
-+getM(int index)
-+void delM(int mintermine)
-+boolean hasM(int mintermine)
-+boolean isEmpty()
-+int getPIndex()
-+int size()
-+byte[] getP() //ADD</panel_attributes>
++RigaCop(nImplicante : int, minT : ArrayList&lt;Integer&gt;)
++getM(index : int) : int
++delM(mintermine : int) : void
++hasM(mintermine : int) : boolean
++isEmpty() : boolean
++getPIndex() : int
++size() : int
++getP() : byte[]</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>260</x>
-      <y>180</y>
-      <w>220</w>
-      <h>320</h>
+      <x>595</x>
+      <y>245</y>
+      <w>125</w>
+      <h>185</h>
     </coordinates>
     <panel_attributes>TabCopertura
 --
--ArrayList&lt;RigaCop&gt; tab
-//-TabIndexP tabIP //DEL
--ArrayList&lt;Integer&gt; listAllMinT
--ArrayList&lt;byte[]&gt; finalP
+-tab : ArrayList&lt;RigaCop&gt; 
+-listAllMinT : ArrayList&lt;Integer&gt;
+-finalP : ArrayList&lt;byte[]&gt;
 --
-+TabCopertura(DA DEFINIRE)
--boolean isEss(RigaCop P)
--boolean isMDom(int m)
--boolean isPDominated(RigaCop P)
--void delP(int pos)
--void delM(int M)
--void delMofP(int pos)
--void delVoidP();
--int nPforM(int m)
-+boolean stepEss()
-+boolean stepRowDom()
-+boolean stepColDom()
-+ArrayList&lt;byte[]&gt; copri()</panel_attributes>
++TabCopertura(esp : TabEsp)
++getListAllMinT() : ArrayList&lt;Integer&gt;
++addFinalP(word : byte[]) : void
++getFinalP() : ArrayList&lt;byte[]&gt;
++getRow(i : int) : RigaCop
++isEmpty() : boolean
++isEss(P : RigaCop) : boolean
++isMDom(m : int) : boolean
++isPDominated(P : RigaCop) : boolean 
++delP(pos : int) : void
++delM(M : int) : void 
++delMofP(pos : int) : void
++delVoidP() : void
++nPforM(m : int) : int 
++stepEss() : boolean
++stepRowDom() : boolean
++stepColDom() : boolean
++printTab() : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>470</x>
-      <y>80</y>
-      <w>150</w>
-      <h>150</h>
+      <x>715</x>
+      <y>195</y>
+      <w>55</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
 m2=0..*</panel_attributes>
-    <additional_attributes>10.0;130.0;120.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>150</x>
-      <y>190</y>
-      <w>130</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
-m2=1</panel_attributes>
-    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLUseCase</id>
-    <coordinates>
-      <x>350</x>
-      <y>560</y>
-      <w>120</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>lt=.
-balloonmarci
-
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>390</x>
-      <y>480</y>
-      <w>110</w>
-      <h>100</h>
-    </coordinates>
-    <panel_attributes>lt=)-
-m1=input for init
-</panel_attributes>
-    <additional_attributes>20.0;20.0;20.0;80.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>500</x>
-      <y>530</y>
-      <w>120</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>DA DEFINIRE
-bg=red
-customelement=
-drawArc(width-25,5,10,50,50,80,false) fg=red bg=red //Parameters (x, y, width, height, start, extent, open)
-drawCircle(width-20,40,3) fg=red bg=red //Parameters (x, y, radius)</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>280</x>
-      <y>70</y>
-      <w>180</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>Da testare e da aggiungere
-le funzioni di input e output</panel_attributes>
-    <additional_attributes/>
+    <additional_attributes>10.0;130.0;40.0;130.0;40.0;10.0;90.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>250</x>
-      <y>0</y>
-      <w>710</w>
-      <h>620</h>
+      <x>590</x>
+      <y>155</y>
+      <w>355</w>
+      <h>280</h>
     </coordinates>
     <panel_attributes>copertura
 --
 bg=cyan
 layer=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>265</x>
+      <y>280</y>
+      <w>170</w>
+      <h>115</h>
+    </coordinates>
+    <panel_attributes>TabEspansione
+--
+#ArrayList&lt;RigaEsp&gt; tab
+--
++TabEsp(args[] : String)
++TabEsp()
++printTab() : void
++alignZero() : void
++isEqual(e1 : RigaEsp, e2 : RigaEsp) : boolean
++diff(e1 : RigaEsp, e2 : RigaEsp) : int
++newCode(e1 : RigaEsp, e2 : RigaEsp) : byte[]
++indiffCheck(e1 : RigaEsp, e2 : RigaEsp) : boolean
++getLength() : int
++getMini(i : int) : ArrayList&lt;Integer&gt;
++getCode(i : int) : byte[] </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>390</x>
+      <y>155</y>
+      <w>150</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>QMcC
+--
+--
+__+espansione(args : String[]) : TabEspansione__
+__+copri(TabEspansione) : ArrayList&lt;byte[]&gt;__
+__+qmcc(args : String[]) : ArrayList&lt;byte[]&gt;__</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>285</x>
+      <y>170</y>
+      <w>115</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>210.0;10.0;10.0;10.0;10.0;220.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>535</x>
+      <y>175</y>
+      <w>70</w>
+      <h>85</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0;70.0;150.0;120.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>495</x>
+      <y>195</y>
+      <w>15</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>70</x>
+      <y>240</y>
+      <w>390</w>
+      <h>185</h>
+    </coordinates>
+    <panel_attributes>espansione
+--
+bg=red
+layer=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>105</x>
+      <y>280</y>
+      <w>130</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>layer=1
+RigaEsp
+--
+mini : ArrayList&lt;Integer&gt;
+code : byte[]
+signed : boolean
+nUni : int
+--
++RigaEsp(newCode : byte[])
++RigaEsp(n : int)
+-convert(m : ArrayList&lt;Integer&gt;) : byte[]
+-contaUno(code : byte[]) : int
++sign() : void
++printRig() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>430</x>
+      <y>285</y>
+      <w>175</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>330.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>230</x>
+      <y>290</y>
+      <w>45</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>45</x>
+      <y>90</y>
+      <w>920</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>qmcc</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLHierarchy</id>
+    <coordinates>
+      <x>75</x>
+      <y>150</y>
+      <w>85</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>type=Package
+qmcc
+	espansione
+	copertura</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
