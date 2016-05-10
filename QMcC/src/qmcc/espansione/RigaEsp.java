@@ -15,6 +15,13 @@ public class RigaEsp {
     byte [] code;
     boolean signed;
     int nUni;
+    
+    public RigaEsp(byte [] newCode) {
+        code = newCode;
+        signed = false;
+        nUni = contaUno(code);
+        
+    }
 
     public RigaEsp (int n) {
         mini.add(0,n);

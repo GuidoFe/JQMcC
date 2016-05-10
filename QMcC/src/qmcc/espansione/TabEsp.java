@@ -14,7 +14,7 @@ import java.util.Arrays;
  */
 
 public class TabEsp {
-    ArrayList<RigaEsp> tab = new ArrayList ();   
+    protected ArrayList<RigaEsp> tab = new ArrayList ();   
     
     public TabEsp (String args []) {
         for (String arg : args) {
@@ -60,16 +60,49 @@ public class TabEsp {
     }
     
     public boolean isEqual (RigaEsp e1, RigaEsp e2){
-        return Arrays.equals(e1.code, e2.code);        
+        return Arrays.equals(e1.code, e2.code);      
     }
     
     public int diff (RigaEsp e1, RigaEsp e2){
-        int index = 0;
+        int diff;
+        
+        diff = e1.nUni - e2.nUni;
+        
+        return diff;
+    }
+    
+    public byte[] newCode (RigaEsp e1, RigaEsp e2){
+        byte [] newCode = new byte [e1.code.length];
         
         for (int i = 0; i<e2.code.length; i++){
-            if (e2.code[i] != e2.code [i])
-                index = i;
+            if (e1.code[i] != e2.code [i])
+                newCode[i] = 2;
+            else newCode[i] = e1.code[i];
         }
-        return index;
+        return newCode;
     }
+    
+    public boolean indiffCheck (RigaEsp e1, RigaEsp e2){
+        boolean check = true;
+        
+        for (int i = 0; i<e2.code.length; i++){
+            if (e1.code[i] != e2.code[i])
+                if((e1.code[i] == 2) || (e2.code[i] ==2) )
+                    check = false;
+        }
+        return check;
+    }
+    
+    public int getLength () {
+        return tab.size();
+    }
+    
+    public ArrayList<Integer> getMini (int i) {
+        return tab.get(i).mini;
+    }
+    
+    public byte [] getCode (int i){
+        return tab.get(i).code;
+    } 
+    
 }
