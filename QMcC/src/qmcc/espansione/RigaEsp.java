@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package qmcc.espansione;
 /**
  *
@@ -14,12 +9,10 @@ public class RigaEsp {
     ArrayList<Integer> mini = new ArrayList (0);
     byte [] code;
     boolean signed;
-    int nUni;
     
     public RigaEsp(byte [] newCode) {
         code = newCode;
         signed = false;
-        nUni = contaUno(code);
         
     }
 
@@ -27,7 +20,6 @@ public class RigaEsp {
         mini.add(0,n);
         code = convert(mini);
         signed = false;
-        nUni = contaUno(code);
     }
 
     private byte[] convert (ArrayList<Integer> m){
@@ -68,7 +60,7 @@ public class RigaEsp {
     }
     
     public void printRig () {
-        System.out.println("Numero " + mini + "\nCodice Binario " + Arrays.toString(code) + "\nNumero Uno " + nUni + "\n");
+        System.out.println("Numero " + mini + "\nCodice Binario " + Arrays.toString(code));
     }
 }
 

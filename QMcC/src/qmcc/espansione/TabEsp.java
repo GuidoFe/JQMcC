@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package qmcc.espansione;
 
 import java.util.ArrayList;
@@ -63,14 +58,6 @@ public class TabEsp {
         return Arrays.equals(e1.code, e2.code);      
     }
     
-    public int diff (RigaEsp e1, RigaEsp e2){
-        int diff;
-        
-        diff = e1.nUni - e2.nUni;
-        
-        return diff;
-    }
-    
     public byte[] newCode (RigaEsp e1, RigaEsp e2){
         byte [] newCode = new byte [e1.code.length];
         
@@ -93,6 +80,14 @@ public class TabEsp {
         return check;
     }
     
+    public boolean check (RigaEsp e1, RigaEsp e2){
+        int d=0;
+        for (int i = 0; i<e1.code.length; i++)
+            if(e1.code[i]!=e2.code[i])
+                d++;
+        return d==1;
+    }
+    
     public int getLength () {
         return tab.size();
     }
@@ -105,4 +100,46 @@ public class TabEsp {
         return tab.get(i).code;
     } 
     
+    public static TabEsp expand(String args []){
+        TabEsp result = new TabEsp();
+        TabEsp tabAtt = new TabEsp (args);
+        TabEsp tabNext = new TabEsp();
+        RigaEsp aux;
+        boolean trovato = true;
+        boolean ricerca = false;
+        
+        tabAtt.alignZero();
+        int i, c, n;     
+        
+        while (trovato == true) {
+            
+            trovato = false;
+            
+            for (i = 0; i < tabAtt.tab.size(); i++ )
+                for (c = 0; c < tabAtt.tab.size(); c++ ) {
+                    if(tabAtt.check(tabAtt.tab.get(i),tabAtt.tab.get(c))){  
+                        tabAtt.tab.get(i).sign();
+                        trovato = true;
+                        aux= new RigaEsp (tabAtt.newCode(tabAtt.tab.get(i),tabAtt.tab.get(c)));
+                        aux.mini.addAll(tabAtt.tab.get(i).mini);
+                        aux.mini.addAll(tabAtt.tab.get(c).mini);
+                        for (n=0; n<tabNext.tab.size();n++){
+                            if(tabNext.isEqual(tabNext.tab.get(n), aux))
+                                ricerca= true;   
+                        }
+                        if (!ricerca)    
+                                tabNext.tab.add(aux);
+                        ricerca = false; 
+                    }
+                }
+            for (i = 0; i < tabAtt.tab.size(); i++ )
+                if(!tabAtt.tab.get(i).signed)
+                    result.tab.add(tabAtt.tab.get(i));
+            tabAtt.tab.clear();
+            tabAtt.tab.addAll(tabNext.tab);
+            tabNext.tab.clear();
+        }
+        result.tab.addAll(tabNext.tab);
+        return result;
+    }
 }
