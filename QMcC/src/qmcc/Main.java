@@ -5,10 +5,20 @@
  */
 package qmcc;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Guido_Fe
  */
 public class Main {
-    
+
+    /**
+     * @param args 
+     */
+    public static void main(String[] args) {
+        ArrayList<byte[]> result = new ArrayList();
+        result = QMcC.qmcc_simplify(args);
+        QMcC.printImp(result, false);
+    }
 }

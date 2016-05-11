@@ -130,13 +130,12 @@ public class TabCopertura {
         boolean done = false;       //Indica se è stato semplificato qualcosa
         for(int i = 0; i<tab.size() && !done; i++){
             if(isEss(tab.get(i))){
-                System.out.println("Essential- P: " + Arrays.toString(tab.get(i).getP()));
+                //System.out.println("Essential- P: " + Arrays.toString(tab.get(i).getP()));
                 delMofP(i);
                 finalP.add(tab.get(i).getP());
                 delP(i);
                 done = true;
                 delVoidP();
-                printTab(); //DEBUG
             }
             
         }
@@ -147,10 +146,9 @@ public class TabCopertura {
         boolean done = false;
         for(int i = 0; i < tab.size() && !done; i++){
             if(isPDominated(i)){
-                System.out.println("RowDominated - P: " + Arrays.toString(tab.get(i).getP())); //DEBUG
+                //System.out.println("RowDominated - P: " + Arrays.toString(tab.get(i).getP())); //DEBUG
                 delP(i);
                 done = true;
-                printTab(); //DEBUG
             }
         }
         return done;
@@ -160,11 +158,10 @@ public class TabCopertura {
         boolean done = false;
         for(int i = 0; i < listAllMinT.size() && !false; i++){
             if(isMDom(listAllMinT.get(i))){
-                System.out.println("ColDom - M: " + listAllMinT.get(i)); //DEBUG
+                //System.out.println("ColDom - M: " + listAllMinT.get(i)); //DEBUG
                 delM(listAllMinT.get(i));
                 delVoidP();
                 done = true;
-                printTab();
             }
         }
         return done;
@@ -189,20 +186,32 @@ public class TabCopertura {
             System.out.print("________");
         System.out.println();
     }
-    
-//    public String printLett(){
-//        String res = new String();
-//        for(int i = 0; i < finalP.size(); i++){
-//            for(int j = 0; j < finalP.get(i).length; j++){
-//                if(finalP.get(i)[j] != 2){
-//                    res = res.concat(nomiLett.get(j));
-//                    if(finalP.get(i)[j] == 0)
-//                        res = res.concat("'");
-//                }
-//            }
-//            if(i != finalP.size()-1)
-//                res = res.concat(" + ");
-//        }
-//        return res;
-//    }
+    public static ArrayList<byte[]> copri(TabEsp in){ //DA FINIRE
+        TabCopertura tab = new TabCopertura(in);
+        boolean redo = false;
+        do{
+            boolean isBlocked = false;
+            boolean s1, s2, s3;
+            do{
+                s1 = tab.stepEss();
+                if(s1) while(tab.stepEss());
+                s2 = tab.stepRowDom();
+                if(s2) while(tab.stepRowDom());
+                s3 = tab.stepColDom();
+                if(s3) while(tab.stepColDom());
+                if(!(s1 || s2 || s3))
+                    isBlocked = true;
+            }while(!isBlocked && !tab.isEmpty());
+            if(isBlocked && !tab.isEmpty()){
+                //System.out.println("Blocked "); DEBUG
+                tab.delMofP(0);
+                tab.addFinalP(tab.getRow(0).getP());
+                tab.delP(0);
+                redo = true;
+                tab.delVoidP();
+            }
+            else redo = false;
+        }while(redo);
+        return tab.getFinalP();
+    }
 }

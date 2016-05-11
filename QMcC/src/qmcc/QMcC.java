@@ -13,35 +13,39 @@ import java.util.*;
  * @author Marcello
  */
 public class QMcC {
+    public static ArrayList<byte[]> qmcc_simplify(String[] args){
+        TabEsp tab = new TabEsp();
+        tab = TabEsp.expand(args);
+        ArrayList<byte[]> result = new ArrayList<byte[]>();
+        result = TabCopertura.copri(tab);
+        return result;
+    } 
     
-    public ArrayList<byte[]> copri(TabEsp in){ //DA FINIRE
-        TabCopertura tab = new TabCopertura(in);
-        boolean redo = false;
-        do{
-            boolean isBlocked = false;
-            boolean s1, s2, s3;
-            do{
-                s1 = tab.stepEss();
-                if(s1) while(tab.stepEss());
-                s2 = tab.stepRowDom();
-                if(s2) while(tab.stepRowDom());
-                s3 = tab.stepColDom();
-                if(s3) while(tab.stepColDom());
-                if(!(s1 || s2 || s3))
-                    isBlocked = true;
-            }while(!isBlocked && !tab.getListAllMinT().isEmpty());
-            if(isBlocked && !tab.isEmpty()){
-                System.out.println("Blocked ");
-                tab.delMofP(0);
-                tab.addFinalP(tab.getRow(0).getP());
-                tab.delP(0);
-                redo = true;
-                tab.delVoidP();
-                tab.printTab();
+    public static void printImp(ArrayList<byte[]> list, boolean formatted){
+        if(!formatted || list.get(0).length >26){
+            if(formatted)
+                System.out.println("Note: number of literals too large to use alphabet representation.");
+            for(int i = 0; i < list.size(); i++){
+                for(int j = 0; j < list.get(i).length; j++){
+                    if(list.get(i)[j] == 2)
+                        System.out.print("-");
+                    else System.out.print(list.get(i)[j]);
+                }
+                System.out.println();
             }
-            else redo = false;
-        }while(redo);
-        return tab.getFinalP();
+        }
+        else
+            for(int i = 0; i < list.size(); i++){
+                for(int j = 0; j < list.get(i).length; j++){
+                    if(list.get(i)[j] != 2){
+                        char c =(char)(j + 97);
+                        System.out.print(c);
+                        if(list.get(i)[j] == 0)
+                            System.out.print("'");
+                    }
+                }
+                if(i != list.size() -1)
+                    System.out.print(" + ");
+            }            
     }
-    
 }
