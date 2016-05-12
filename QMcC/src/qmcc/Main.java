@@ -19,7 +19,7 @@ public class Main {
      * @param args 
      */
     public static void main(String[] args) {
-       String [] mini;
+       String [] mini = null;
        boolean setIn = false;
        boolean setOut = false;
        boolean setLet = false;
@@ -31,7 +31,13 @@ public class Main {
 //        }
         for(int i = 0; i < args.length && i<5; i++){
             if ("-ti".equals(args[i])) {
-                mini = InOut.readMini(args[i+1]);
+                try{
+                    mini = InOut.readMini(args[i+1]);
+                }
+                catch(IOException ex){
+                    System.out.println("ERRORE NEL FILE DI INPUT");
+                    System.exit(-1);
+                }
                 setIn = true;
             }
             else if("-to".equals(args[i])){
@@ -47,7 +53,13 @@ public class Main {
             mini = Arrays.copyOfRange(args, p, args.length);
             
         }
-        result = QMcC.qmcc_simplify(mini);       
+        try {
+            result = QMcC.qmcc_simplify(mini);
+        }
+        catch (NumberFormatException ex){
+            System.out.println("ERRORE, hai inserito carattere non riconosciuti come numeri");
+            System.exit(-2);
+        }
         if(result.get(0).length>26){
             setLet = false;
         } 

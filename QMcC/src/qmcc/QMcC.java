@@ -14,7 +14,7 @@ import java.io.*;
  * @author Marcello
  */
 public class QMcC {
-    public static ArrayList<byte[]> qmcc_simplify(String[] args){
+    public static ArrayList<byte[]> qmcc_simplify(String[] args)  throws NumberFormatException {
         TabEsp tab = new TabEsp();
         tab = TabEsp.expand(args);
         ArrayList<byte[]> result = new ArrayList<byte[]>();

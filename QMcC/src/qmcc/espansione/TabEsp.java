@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class TabEsp {
     protected ArrayList<RigaEsp> tab = new ArrayList ();   
     
-    public TabEsp (String args []) {
+    public TabEsp (String args []) throws NumberFormatException {
         for (String arg : args) {
             RigaEsp n = new RigaEsp(Integer.parseInt(arg));
             tab.add(n);            
@@ -100,7 +100,7 @@ public class TabEsp {
         return tab.get(i).code;
     } 
     
-    public static TabEsp expand(String args []){
+    public static TabEsp expand(String args [])  throws NumberFormatException {
         TabEsp result = new TabEsp();
         TabEsp tabAtt = new TabEsp (args);
         TabEsp tabNext = new TabEsp();
