@@ -7,6 +7,7 @@ package qmcc;
 import qmcc.copertura.TabCopertura;
 import qmcc.espansione.TabEsp;
 import java.util.*;
+import java.io.*;
 /**
  *
  * @author Guido_Fe
@@ -47,5 +48,32 @@ public class QMcC {
                 if(i != list.size() -1)
                     System.out.print(" + ");
             }            
+    }
+    public static void writeImp(ArrayList<byte[]> list, String path, boolean formatted) throws IOException{
+        FileWriter fw = new FileWriter(path);
+        PrintWriter pw = new PrintWriter(fw);
+        if(!formatted){
+            for(int i = 0; i < list.size(); i++){
+                for(int j = 0; j < list.get(i).length; j++){
+                    if(list.get(i)[j] == 2)
+                        pw.print("-");
+                    else pw.print(list.get(i)[j]);
+                }
+                pw.println();
+            }
+        }
+        else
+            for(int i = 0; i < list.size(); i++){
+                for(int j = 0; j < list.get(i).length; j++){
+                    if(list.get(i)[j] != 2){
+                        char c =(char)(j + 97);
+                        pw.print(c);
+                        if(list.get(i)[j] == 0)
+                            pw.print("'");
+                    }
+                }
+                if(i != list.size() -1)
+                    pw.print(" + ");
+            }         
     }
 }
