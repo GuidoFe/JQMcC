@@ -8,6 +8,7 @@ package qmcc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.*;
+import java.util.*;
 
 /**
  *
@@ -29,6 +30,14 @@ public class Main {
 //        for(int i = 0; i < args.length && !stopRead; i++){
 //            if("-ti".equals(args[i]))
 //        }
+        if(args.length >= 0 && "help".equals(args[0])){
+            System.out.print("Arguments:  [-ti fileInput.txt] [-to fileOutput.txt] [-l] [Minterms]"
+            + "\nEs. 'java -jar QMcC.jar -to output.txt 2 4 5 7'\n"
+            + "With -l it will use alphabet symbols instead of (1, 0, -), if"
+            + "there aren't too many inputs."
+            + "\nAuthors: Marcello Simonati, Guido Ferri.\n");
+            System.exit(-2);
+        }
         for(int i = 0; i < args.length && i<5; i++){
             if ("-ti".equals(args[i])) {
                 try{
@@ -57,22 +66,39 @@ public class Main {
             result = QMcC.qmcc_simplify(mini);
         }
         catch (NumberFormatException ex){
-            System.out.println("ERRORE, hai inserito carattere non riconosciuti come numeri");
+            System.out.println("ERRORE, hai inserito caratteri non riconosciuti come numeri");
             System.exit(-2);
         }
+        Collections.sort(result, new Comparator<byte[]>(){
+            public int compare(byte[] a, byte[] b){
+                for(int i = 0; i < a.length && i < b.length; i++){
+                    if(a[i] != b[i]){
+                        if(a[i] == 1 || b[i] == 2)
+                            return -1;
+                        else return 1;
+                    }
+                }
+                if(a.length == b.length)
+                    return 0;
+                else if(a.length < b.length)
+                    return -1;
+                else return 1;
+            }
+        });
         if(result.get(0).length>26){
             setLet = false;
         } 
         if(setOut){
             try{
-                QMcC.writeImp(result, fileOut, setLet);
+                InOut.writeImp(result, fileOut, setLet);
             }
             catch(IOException er){
-                System.out.println("I/O Exception");
+                System.out.println("Error: I/O Exception");
+                System.exit(-2);
             }
         }
         else {
-            QMcC.printImp(result, setLet);
+            InOut.printImp(result, setLet);
         }
     }
 }
