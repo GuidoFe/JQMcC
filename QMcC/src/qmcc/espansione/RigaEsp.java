@@ -5,24 +5,24 @@ package qmcc.espansione;
  */
 
 import java.util.*;
-public class RigaEsp {
-    ArrayList<Integer> mini = new ArrayList (0);
-    byte [] code;
-    boolean signed;
+public class RigaEsp {  //Struttura dati per ogni riga della tabella di espansione
+    ArrayList<Integer> mini = new ArrayList (0);  //mintermini   
+    byte [] code;  //implicante in forma binaria
+    boolean signed;  //stato corrispondente all'avvenuta espansione di una coppia
     
-    public RigaEsp(byte [] newCode) {
+    public RigaEsp(byte [] newCode) {  //costruttore per implicante espanso
         code = newCode;
         signed = false;
         
     }
 
-    public RigaEsp (int n) {
+    public RigaEsp (int n) { //costruttore che converte ogni mintermine da decimale a binario
         mini.add(0,n);
         code = convert(mini);
         signed = false;
     }
 
-    private byte[] convert (ArrayList<Integer> m){
+    private byte[] convert (ArrayList<Integer> m){ //convertitore da decimale a binario
         int i = m.get(0);
         int resto;
         String result = "";
@@ -44,8 +44,8 @@ public class RigaEsp {
         }        
         return codice;
     }
-    
-    private int contaUno (byte [] code) {
+    //Metodo non più usato. Conta gli uni di un implicante
+    /*private int contaUno (byte [] code) {
         int c = 0;
         
         for (int i = 0; i < code.length; i++){
@@ -53,9 +53,9 @@ public class RigaEsp {
                 c++;
         }
         return c;
-    }
+    }*/
     
-    public void sign (){
+    public void sign (){ 
         signed = true;
     }
     

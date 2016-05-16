@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor. Ciao bel
- */
 package qmcc.copertura;
 import java.util.*;
 /**
@@ -10,8 +5,8 @@ import java.util.*;
  * @author Guido_Fe
  */
 public class RigaCop {
-    private final byte[] implicante; //indice dell'implicante P (es P1 = 1)
-    private ArrayList<Integer> listMinT;
+    private final byte[] implicante; //implicante
+    private ArrayList<Integer> listMinT; //mintermini coperti dall'implicante
     
     public RigaCop(int nImplicante, byte[] implicante, ArrayList<Integer> minT){
         this.implicante = implicante;

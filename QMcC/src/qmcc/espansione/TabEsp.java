@@ -11,13 +11,13 @@ import java.util.Arrays;
 public class TabEsp {
     protected ArrayList<RigaEsp> tab = new ArrayList ();   
     
-    public TabEsp (String args []) throws NumberFormatException {
+    public TabEsp (String args []) throws NumberFormatException { //costruttore della tabella degli implianti
         for (String arg : args) {
             RigaEsp n = new RigaEsp(Integer.parseInt(arg));
             tab.add(n);            
         }
     }
-    public TabEsp (){
+    public TabEsp (){  //costruttore per creare una tabella vuota
         
     }
     
@@ -27,7 +27,7 @@ public class TabEsp {
         }
     }
     
-    public void alignZero () {
+    public void alignZero () {  //allinea il numero di input in base al mintermine maggiore
         int max = 0;
         int c;
         for (int i = 0; i<tab.size(); i++){
@@ -58,7 +58,7 @@ public class TabEsp {
         return Arrays.equals(e1.code, e2.code);      
     }
     
-    public byte[] newCode (RigaEsp e1, RigaEsp e2){
+    public byte[] newCode (RigaEsp e1, RigaEsp e2){  //genera il codice espanso
         byte [] newCode = new byte [e1.code.length];
         
         for (int i = 0; i<e2.code.length; i++){
@@ -69,18 +69,7 @@ public class TabEsp {
         return newCode;
     }
     
-    public boolean indiffCheck (RigaEsp e1, RigaEsp e2){
-        boolean check = true;
-        
-        for (int i = 0; i<e2.code.length; i++){
-            if (e1.code[i] != e2.code[i])
-                if((e1.code[i] == 2) || (e2.code[i] ==2) )
-                    check = false;
-        }
-        return check;
-    }
-    
-    public boolean check (RigaEsp e1, RigaEsp e2){
+    public boolean check (RigaEsp e1, RigaEsp e2){  //verifica che una coppia sia espandibile
         int d=0;
         for (int i = 0; i<e1.code.length; i++)
             if(e1.code[i]!=e2.code[i])
@@ -100,10 +89,10 @@ public class TabEsp {
         return tab.get(i).code;
     } 
     
-    public static TabEsp expand(String args [])  throws NumberFormatException {
-        TabEsp result = new TabEsp();
-        TabEsp tabAtt = new TabEsp (args);
-        TabEsp tabNext = new TabEsp();
+    public static TabEsp expand(String args [])  throws NumberFormatException {  //funzione di espansione
+        TabEsp result = new TabEsp();  //tabella con gli implicanti primi
+        TabEsp tabAtt = new TabEsp (args);  //tabella in espansione
+        TabEsp tabNext = new TabEsp();  //nuova tabella in costruzione
         RigaEsp aux;
         boolean trovato = true;
         boolean ricerca = false;
@@ -111,19 +100,19 @@ public class TabEsp {
         tabAtt.alignZero();
         int i, c, n;     
         
-        while (trovato == true) {
+        while (trovato == true) {  //ciclo di espansione, termina quando non riesce ad espandere nessuna coppia
             
             trovato = false;
             
             for (i = 0; i < tabAtt.tab.size(); i++ )
                 for (c = 0; c < tabAtt.tab.size(); c++ ) {
-                    if(tabAtt.check(tabAtt.tab.get(i),tabAtt.tab.get(c))){  
+                    if(tabAtt.check(tabAtt.tab.get(i),tabAtt.tab.get(c))){  //controllo delle coppie se sono espandibili
                         tabAtt.tab.get(i).sign();
                         trovato = true;
                         aux= new RigaEsp (tabAtt.newCode(tabAtt.tab.get(i),tabAtt.tab.get(c)));
                         aux.mini.addAll(tabAtt.tab.get(i).mini);
                         aux.mini.addAll(tabAtt.tab.get(c).mini);
-                        for (n=0; n<tabNext.tab.size();n++){
+                        for (n=0; n<tabNext.tab.size();n++){  //controllo delle coppie se non sono state già espanse
                             if(tabNext.isEqual(tabNext.tab.get(n), aux))
                                 ricerca= true;   
                         }
@@ -133,9 +122,9 @@ public class TabEsp {
                     }
                 }
             for (i = 0; i < tabAtt.tab.size(); i++ )
-                if(!tabAtt.tab.get(i).signed)
+                if(!tabAtt.tab.get(i).signed)  //si aggiungono alla tabella risultato le righe non segnate
                     result.tab.add(tabAtt.tab.get(i));
-            tabAtt.tab.clear();
+            tabAtt.tab.clear();  
             tabAtt.tab.addAll(tabNext.tab);
             tabNext.tab.clear();
         }

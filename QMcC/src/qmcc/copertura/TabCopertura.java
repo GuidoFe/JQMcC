@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package qmcc.copertura;
 import java.util.*;
 import qmcc.espansione.TabEsp;
@@ -11,12 +6,11 @@ import qmcc.espansione.TabEsp;
  * @author Guido_Fe
  */
 public class TabCopertura {
-    private ArrayList<RigaCop> tab;
+    private ArrayList<RigaCop> tab; //Tabella per la copertura
     private ArrayList<Integer> listAllMinT; //lista di tutti i mintermini presenti. Byte > 2 solo per distinguere gli implicanti tra loro
-    private ArrayList<byte[]> finalP;
-//    private ArrayList<String> nomiLett;
+    private ArrayList<byte[]> finalP; //Implicanti finali
     
-    public TabCopertura(TabEsp esp){
+    public TabCopertura(TabEsp esp){ //Elabora la tabella espansione
         tab = new ArrayList<RigaCop>();
         listAllMinT = new ArrayList<Integer>();
         finalP = new ArrayList<byte[]>();
@@ -34,7 +28,7 @@ public class TabCopertura {
         return listAllMinT;
     }
     
-    public void addFinalP(byte[] word){
+    public void addFinalP(byte[] word){ // Aggiunge un implicante finale alla lista
         finalP.add(word);
     }
     
@@ -42,7 +36,7 @@ public class TabCopertura {
         return finalP;
     }
     
-    public RigaCop getRow(int i){
+    public RigaCop getRow(int i){ //Restituisce una riga della tabella
         return tab.get(i);
     }
     
@@ -50,7 +44,7 @@ public class TabCopertura {
         return tab.isEmpty();
     }
     
-    public boolean isEss(RigaCop P){
+    public boolean isEss(RigaCop P){ //controlla se un implicante è essenziale
         boolean trovato = false;
         for(int i = 0; i<P.size() && !trovato; i++){
             boolean doppio = false;
@@ -64,7 +58,7 @@ public class TabCopertura {
         return trovato;
     }
     
-    public boolean isMDom(int m){
+    public boolean isMDom(int m){ //controlla la dominanza di colonna di un mintermine
         boolean trovato = false;
         for(int i = 0; i < listAllMinT.size() && !trovato; i++){
             if(listAllMinT.get(i) != m && nPforM(m)>nPforM(listAllMinT.get(i))){
@@ -79,7 +73,7 @@ public class TabCopertura {
         return trovato;
     }
     
-    public boolean isPDominated(int index){
+    public boolean isPDominated(int index){ //controlla la dominanza di riga
         boolean trovato = false;
         for(int i = 0; i < tab.size() && !trovato; i++){
             boolean uguali = true;
@@ -93,23 +87,23 @@ public class TabCopertura {
         return trovato;
     }
     
-    public void delP(int pos){
+    public void delP(int pos){ //Elimina una riga
         tab.remove(pos);
     }
     
-    public void delM(int m){  //cancella i mintermini anche da listAllMinT
+    public void delM(int m){  //cancella i mintermini da listAllMinT e dalla tabella
         for(int i = 0; i < tab.size(); i++)
             tab.get(i).delM(m);
         listAllMinT.remove(new Integer(m));
     }
     
-    public void delMofP(int pos){
+    public void delMofP(int pos){ //elimina i mintermini coperti da un implicante dalla tabella
         while(!tab.get(pos).isEmpty()){
             delM(tab.get(pos).getM(0));
         }
     }
     
-    public void delVoidP(){
+    public void delVoidP(){ //elimina le righe vuote
         for(int i = 0; i < tab.size(); i++)
             if(tab.get(i).isEmpty()){
                 delP(i);
@@ -118,7 +112,7 @@ public class TabCopertura {
     }
     
     
-    public int nPforM(int m){
+    public int nPforM(int m){ //conta quanti implicanti coprono un dato mintermine
         int tot = 0;
         for(int i = 0; i<tab.size(); i++)
             if(tab.get(i).hasM(m))
@@ -126,11 +120,10 @@ public class TabCopertura {
         return tot;
     }
     
-    public boolean stepEss(){
+    public boolean stepEss(){ // Esegue il controllo dell'essenzialità, elaborando la tabella e finalP
         boolean done = false;       //Indica se è stato semplificato qualcosa
         for(int i = 0; i<tab.size() && !done; i++){
             if(isEss(tab.get(i))){
-                //System.out.println("Essential- P: " + Arrays.toString(tab.get(i).getP()));
                 delMofP(i);
                 finalP.add(tab.get(i).getP());
                 delP(i);
@@ -142,11 +135,10 @@ public class TabCopertura {
         return done;
     }
     
-    public boolean stepRowDom(){
+    public boolean stepRowDom(){ //elabora la tabella in caso di dominanza di riga
         boolean done = false;
         for(int i = 0; i < tab.size() && !done; i++){
             if(isPDominated(i)){
-                //System.out.println("RowDominated - P: " + Arrays.toString(tab.get(i).getP())); //DEBUG
                 delP(i);
                 done = true;
             }
@@ -154,11 +146,10 @@ public class TabCopertura {
         return done;
     }
     
-    public boolean stepColDom(){
+    public boolean stepColDom(){ //elabora la tabella in caso di dominanza di colonna
         boolean done = false;
         for(int i = 0; i < listAllMinT.size() && !false; i++){
             if(isMDom(listAllMinT.get(i))){
-                //System.out.println("ColDom - M: " + listAllMinT.get(i)); //DEBUG
                 delM(listAllMinT.get(i));
                 delVoidP();
                 done = true;
@@ -167,7 +158,7 @@ public class TabCopertura {
         return done;
     }
     
-    public void printTab(){
+    public void printTab(){ //stampa la tabella
         System.out.print("         \t");
         for(int i = 0; i<listAllMinT.size(); i++){
             System.out.print(listAllMinT.get(i)+"\t");
@@ -186,14 +177,14 @@ public class TabCopertura {
             System.out.print("________");
         System.out.println();
     }
-    public static ArrayList<byte[]> copri(TabEsp in){ //DA FINIRE
+    public static ArrayList<byte[]> copri(TabEsp in){ //Esegue l'intero algoritmo di copertura
         TabCopertura tab = new TabCopertura(in);
         boolean redo = false;
         do{
             boolean isBlocked = false;
             boolean s1, s2, s3;
             do{
-                s1 = tab.stepEss();
+                s1 = tab.stepEss();  //Esegue i vari controlli ripetutamente fino a quando non semplifica più nulla
                 if(s1) while(tab.stepEss());
                 s2 = tab.stepRowDom();
                 if(s2) while(tab.stepRowDom());
@@ -202,9 +193,8 @@ public class TabCopertura {
                 if(!(s1 || s2 || s3))
                     isBlocked = true;
             }while(!isBlocked && !tab.isEmpty());
-            if(isBlocked && !tab.isEmpty()){
-                //System.out.println("Blocked "); DEBUG
-                tab.delMofP(0);
+            if(isBlocked && !tab.isEmpty()){ //Se la semplificazione non è stata completa 
+                tab.delMofP(0);              //e non trova più condizioni di essenzialità o dominanza, aggiunge il primo implicante a quelli finali
                 tab.addFinalP(tab.getRow(0).getP());
                 tab.delP(0);
                 redo = true;

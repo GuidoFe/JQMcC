@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package qmcc;
 
 import java.util.ArrayList;
@@ -13,6 +8,7 @@ import java.util.*;
 /**
  *
  * @author Guido_Fe
+ * @author Marcello
  */
 public class Main {
 
@@ -25,11 +21,7 @@ public class Main {
        boolean setOut = false;
        boolean setLet = false;
        String fileOut = new String();
-       ArrayList<byte[]> result = new ArrayList();
-//        boolean stopRead = false;
-//        for(int i = 0; i < args.length && !stopRead; i++){
-//            if("-ti".equals(args[i]))
-//        }
+       ArrayList<byte[]> result = new ArrayList();//inizio dell'elabrazione degli argomenti
         if(args.length >= 0 && "help".equals(args[0])){
             System.out.print("Arguments:  [-ti fileInput.txt] [-to fileOutput.txt] [-l] [Minterms]"
             + "\nEs. 'java -jar QMcC.jar -to output.txt 2 4 5 7'\n"
@@ -69,8 +61,8 @@ public class Main {
             System.out.println("ERRORE, hai inserito caratteri non riconosciuti come numeri");
             System.exit(-2);
         }
-        Collections.sort(result, new Comparator<byte[]>(){
-            public int compare(byte[] a, byte[] b){
+        Collections.sort(result, new Comparator<byte[]>(){ //ordina gli implicanti
+            public int compare(byte[] a, byte[] b){ //codice della funzione di comparazione
                 for(int i = 0; i < a.length && i < b.length; i++){
                     if(a[i] != b[i]){
                         if(a[i] == 1 || b[i] == 2)
@@ -85,9 +77,9 @@ public class Main {
                 else return 1;
             }
         });
-        if(result.get(0).length>26){
-            setLet = false;
-        } 
+        if(result.get(0).length>26){ //Se il numero dei letterali in ogni 
+            setLet = false;          //implicante è maggiore del numero di lettere dell'alfabeto,
+        }                            //il formato dell'output viene settato a quello di default 
         if(setOut){
             try{
                 InOut.writeImp(result, fileOut, setLet);
@@ -96,6 +88,7 @@ public class Main {
                 System.out.println("Error: I/O Exception");
                 System.exit(-2);
             }
+            System.out.println("Done.");
         }
         else {
             InOut.printImp(result, setLet);
